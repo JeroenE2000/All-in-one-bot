@@ -41,7 +41,7 @@ module.exports = {
             }
 
             // Check if the sender has enough money
-            if (amount > senderData.balance) {
+            if (amount >= senderData.balance) {
                 return interaction.reply(`${sender.username}, you do not have enough money to transfer ${amount}.`);
             }
 
