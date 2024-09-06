@@ -28,13 +28,7 @@ module.exports = {
             if (!videoUrl) {
                 return interaction.reply({ content: 'The video URL is missing or invalid.', ephemeral: true });
             }
-
-            const embed = new EmbedBuilder()
-                .setTitle('Click here to watch the video!')
-                .setDescription(`[Click here to view the video](${videoUrl})`)
-                .setURL(videoUrl)
-
-            await interaction.reply({ embeds: [embed] });
+                await interaction.reply({ content: videoUrl });
         } catch (error) {
             console.error(error);
             await interaction.reply({ content: 'An error occurred while searching for the video.', ephemeral: true });
