@@ -221,13 +221,14 @@ function calculateWinnings(playerScore, botScore, betAmount) {
     
     if (playerScore > 21) {
         winnings = -betAmount; // Player busts
-    } else if (playerScore === 21 && playerScore > botScore) {
+    } 
+    if (playerScore === 21 && playerScore > botScore) {
         winnings = isHappyHours ? 1.5 * betAmount * 2 : 1.5 * betAmount; // Player wins with 21
-    } else if (botScore > 21 || playerScore > botScore) {
-        winnings = isHappyHours ? 2 * betAmount : betAmount; // Player wins
-    } else if (playerScore < botScore) {
-        winnings = isHappyHours ? -2 * betAmount : -betAmount; // Bot wins
     }
+    if (botScore > 21 || playerScore > botScore) {
+        winnings = isHappyHours ? 2 * betAmount : betAmount; // Player wins
+    }
+    if (playerScore < botScore) return -betAmount; // bot wins
     
     return winnings;
 }
