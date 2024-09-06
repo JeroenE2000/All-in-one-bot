@@ -211,8 +211,24 @@ function calculateScore(cards) {
 }
 
 function calculateWinnings(playerScore, botScore, betAmount) {
-    if (playerScore > 21) return -betAmount; // Player busts
-    if (botScore > 21 || playerScore > botScore) return betAmount; // Player wins
-    if (playerScore < botScore) return -betAmount; // Bot wins
-    return 0; // Tie
+    const now = new Date();
+    const hour = now.getHours();
+    
+    // Determine if it's happy hour
+    const isHappyHours = hour >= 21 && hour < 23;
+    
+    let winnings = 0;
+    
+    if (playerScore > 21) {
+        winnings = -betAmount; // Player busts
+    } else if (playerScore === 21 && playerScore > botScore) {
+        winnings = isHappyHours ? 1.5 * betAmount * 2 : 1.5 * betAmount; // Player wins with 21
+    } else if (botScore > 21 || playerScore > botScore) {
+        winnings = isHappyHours ? 2 * betAmount : betAmount; // Player wins
+    } else if (playerScore < botScore) {
+        winnings = isHappyHours ? -2 * betAmount : -betAmount; // Bot wins
+    }
+    
+    return winnings;
 }
+
