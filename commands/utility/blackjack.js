@@ -218,16 +218,10 @@ function calculateWinnings(playerScore, botScore, betAmount) {
     const isHappyHours = hour >= 21 && hour < 23;
     
     let winnings = 0;
-    
-    if (playerScore > 21) {
-        winnings = -betAmount; // Player busts
-    } 
-    if (playerScore === 21 && playerScore > botScore) {
-        winnings = isHappyHours ? 1.5 * betAmount * 2 : 1.5 * betAmount; // Player wins with 21
-    }
-    if (botScore > 21 || playerScore > botScore) {
-        winnings = isHappyHours ? 2 * betAmount : betAmount; // Player wins
-    }
+    if (playerScore > 21 && botScore > 21) return betAmount; // Both bust
+    if (playerScore > 21)  return -betAmount; // Player bust
+    if (playerScore === 21 && playerScore > botScore)  winnings = isHappyHours ? 1.5 * betAmount * 2 : 1.5 * betAmount; // Player wins with 21
+    if (botScore > 21 || playerScore > botScore) winnings = isHappyHours ? 2 * betAmount : betAmount; // Player wins
     if (playerScore < botScore) return -betAmount; // bot wins
     
     return winnings;
