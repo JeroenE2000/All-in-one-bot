@@ -43,6 +43,7 @@ module.exports = {
 
             // Create the initial embed
             const embed = new EmbedBuilder()
+                .setColor('#00ff15')
                 .setTitle('Blackjack Game Started!')
                 .setDescription(`${player1.username} (${player1Score} points) vs Bot (${botScore} points + hidden)`)
                 .setFooter({ text: `Deck ID: ${deckId}. Bet: ${bet}` })
@@ -135,6 +136,7 @@ async function botPlay(deckId, botHand, player1, player1Hand, bet, interaction) 
     const botScore = calculateScore(botHand.cards);
 
     const embed = new EmbedBuilder()
+        .setColor('#ff0011')
         .setTitle('Game Over!')
         .setDescription(`${player1.username} (${player1Score} points) vs Bot (${botScore} points)`)
         .addFields(
@@ -180,11 +182,37 @@ async function updatePlayerBalance(user, amount) {
 }
 
 function formatHand(cards, hideSecondCard = false) {
+    const suitEmojis = {
+        SPADES: '<:nosh:1239558367282860042>',
+        HEARTS: '♥️',
+        DIAMONDS: '♦️',
+        CLUBS: '🍀'
+    };
+
+    const valueEmojis = {
+        '2': '2️⃣',
+        '3': '3️⃣',
+        '4': '4️⃣',
+        '5': '5️⃣',
+        '6': '6️⃣',
+        '7': '7️⃣',
+        '8': '8️⃣',
+        '9': '9️⃣',
+        '10': '🔟',
+        JACK: ':farmer:',
+        QUEEN: ':princess:',
+        KING: ':prince:',
+        ACE: '🇦'
+    };
+
     return cards.map((card, index) => {
-        if (hideSecondCard && index === 1) return 'Hidden';
-        return `[${card.value} of ${card.suit}](${card.image})`;
+        if (hideSecondCard && index === 1) return '🃏';
+        const suitEmoji = suitEmojis[card.suit];
+        const valueEmoji = valueEmojis[card.value];
+        return `${valueEmoji}${suitEmoji}`;
     }).join(', ');
 }
+
 
 async function drawCards(deckId, count) {
     const response = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=${count}`);
