@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
+const config = require('../../config.json');
 
 let apiCallCount = 0;
 let countStartTime = Date.now();
@@ -50,7 +51,7 @@ module.exports = {
             }
 
             // Make a GET request to the GIPHY API
-            const response = await axios.get(`https://api.giphy.com/v1/gifs/search?api_key=zoq9FYXtEDiiDpGY2rxztoJO22rit2QT&q=${value}&limit=1&offset=${offset}&rating=g&lang=en`);
+            const response = await axios.get(`https://api.giphy.com/v1/gifs/search?api_key=${config.giphyApiKey}&q=${value}&limit=1&offset=${offset}&rating=g&lang=en`);
 
             // Process the response and send the gif to the user
             if (response.data.data && response.data.data[0]) {
