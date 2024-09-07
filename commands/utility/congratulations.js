@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const Player = require('../../models/player');
 const axios = require('axios'); // Import axios
 const config = require('../../config.json');
 
@@ -14,11 +13,7 @@ module.exports = {
 
     async execute(interaction) {
         const target = interaction.options.getUser('target');
-        const congrats = await Player.findOne({ userId: target.id });
 
-        if (!congrats) {
-            return interaction.reply(`${target.username} is not registered in the system.`);
-        }
         // Search for a random Happy Birthday GIF
         const gifUrl = `https://api.giphy.com/v1/gifs/random?api_key=${config.giphyApiKey}&tag=happy+birthday`;
 
@@ -34,7 +29,7 @@ module.exports = {
             console.error('Error fetching GIF:', error);
         }
 
-        // Create the response with GIF
+        // Create the response with GIF and mention everyone
         const embed = new EmbedBuilder()
             .setColor('#FF0000')
             .setTitle(`Happy Birthday, ${target.username}!`)
