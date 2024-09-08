@@ -1,7 +1,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const { mongoURI, token } = require('./config.json');const mongoose = require('mongoose');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
@@ -36,7 +37,7 @@ for (const file of eventFiles) {
 	}
 }
 
-mongoose.connect(mongoURI, {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
@@ -45,4 +46,4 @@ mongoose.connect(mongoURI, {
     console.error('Error connecting to MongoDB:', err);
 });
 
-client.login(token);
+client.login(process.env.DISCORD_TOKEN);

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const axios = require('axios'); // Import axios
-const config = require('../../config.json');
+const axios = require('axios');
+require('dotenv').config();
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,7 +15,7 @@ module.exports = {
         const target = interaction.options.getUser('target');
 
         // Search for a random Happy Birthday GIF
-        const gifUrl = `https://api.giphy.com/v1/gifs/random?api_key=${config.giphyApiKey}&tag=happy+birthday`;
+        const gifUrl = `https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_API_KEY}&tag=happy+birthday`;
 
         let gif;
         try {

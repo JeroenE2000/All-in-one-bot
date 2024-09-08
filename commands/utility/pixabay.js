@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
-const config = require('../../config.json');
+require('dotenv').config();
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,7 +15,7 @@ module.exports = {
         const query = interaction.options.getString('query');
 
         try {
-            const response = await axios.get(`https://pixabay.com/api/?key=${config.pixabayApiKey}&q=${encodeURIComponent(query)}`);
+            const response = await axios.get(`https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=${encodeURIComponent(query)}`);
             const images = response.data.hits;
 
             if (images.length === 0) {
