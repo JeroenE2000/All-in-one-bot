@@ -109,6 +109,7 @@ async function updatePlayerBalance(user, amount) {
 function calculateWinnings(betAmount, betColor, betNumber, resultColor, resultNumber) {
     let winnings = 0;
     if (betColor && betColor === resultColor) winnings += betAmount * 2; // Color bet
+    if (betColor === ':green_circle:' && resultColor === ':green_circle:') winnings += betAmount * 35; // Green bet
     if (betNumber !== null && betNumber == resultNumber) winnings += betAmount * 35; // Number bet
     if (winnings === 0) winnings -= betAmount; // No win
     return winnings;
