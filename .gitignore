@@ -2,7 +2,6 @@
 logs
 *.log
 .env
-images/
 config.json
 npm-debug.log*
 yarn-debug.log*
